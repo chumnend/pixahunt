@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint src/",
+    "lint:fix": "vue-cli-service lint  src/ --fix"
   },
   "dependencies": {
     "core-js": "^3.6.5",
@@ -13,11 +14,14 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-eslint": "^4.5.8",
     "@vue/cli-service": "~4.5.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-vue": "^6.2.2",
+    "prettier": "^1.19.1",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
@@ -27,12 +31,24 @@
     },
     "extends": [
       "plugin:vue/essential",
-      "eslint:recommended"
+      "eslint:recommended",
+      "@vue/prettier"
     ],
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "prettier/prettier": [
+        "warn",
+        {
+          "semi": true,
+          "singleQuote": true,
+          "trailingComma": "all",
+          "tabWidth": 2,
+          "endOfLine": "lf"
+        }
+      ]
+    }
   },
   "browserslist": [
     "> 1%",
