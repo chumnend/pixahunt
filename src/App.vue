@@ -20,9 +20,28 @@ export default {
     searchbar: SearchBar,
   },
 
+  data() {
+    return {
+      images: [],
+      totalImages: 0,
+    };
+  },
+
   methods: {
     makeSearch(search) {
-      alert(`searching for ${search}`);
+      const baseURI = 'https://pixabay.com/api/';
+      const apiKey = process.env.VUE_APP_API_KEY;
+
+      const url = `${baseURI}?key=${apiKey}&q=${search}`;
+      this.$http
+        .get(url)
+        .then(({ data }) => {
+          this.images = data.hits;
+          this.totalImages = data.total;
+        })
+        .catch(err => {
+          console.error(err.message);
+        });
     },
   },
 };

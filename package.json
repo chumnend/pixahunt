@@ -9,6 +9,7 @@
     "lint:fix": "vue-cli-service lint  src/ --fix"
   },
   "dependencies": {
+    "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "vue": "^2.6.11"
   },
