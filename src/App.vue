@@ -6,24 +6,29 @@
         <h3>Find Stock Photos.</h3>
       </div>
       <searchbar @search="makeSearch" />
+      <images v-bind:images="images" />
     </div>
   </div>
 </template>
 
 <script>
 import SearchBar from '@/components/SearchBar';
+import Images from '@/components/Images';
 
 export default {
   name: 'App',
 
   components: {
     searchbar: SearchBar,
+    images: Images,
   },
 
   data() {
     return {
       images: [],
       totalImages: 0,
+      page: 1,
+      search: '',
     };
   },
 
@@ -31,6 +36,9 @@ export default {
     makeSearch(search) {
       const baseURI = 'https://pixabay.com/api/';
       const apiKey = process.env.VUE_APP_API_KEY;
+
+      this.search = search;
+      this.page = 1;
 
       const url = `${baseURI}?key=${apiKey}&q=${search}`;
       this.$http
@@ -43,6 +51,9 @@ export default {
           console.error(err.message);
         });
     },
+
+    nextPage() {},
+    prevPage() {},
   },
 };
 </script>
@@ -56,6 +67,7 @@ export default {
   background: #fff;
   width: 100%;
   max-width: 600px;
+  height: auto;
   margin: 0 auto;
   padding: 2rem;
   border-radius: 10px;
