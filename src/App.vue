@@ -5,8 +5,12 @@
         <h1 class="brand">Pixahunt</h1>
         <h3>Find Stock Photos.</h3>
       </div>
-      <searchbar @search="makeSearch" />
-      <images v-bind:images="images" />
+      <searchbar @search="makeSearch" :loading="loading" />
+
+      <h3 class="instructions" v-if="!search">
+        Type something in the search bar and hit 'GO' to get started.
+      </h3>
+      <images v-else :images="images" :search="search" :loading="loading" />
     </div>
   </div>
 </template>
@@ -25,10 +29,12 @@ export default {
 
   data() {
     return {
+      loading: false,
       images: [],
       totalImages: 0,
       page: 1,
       search: '',
+      perPage: 15,
     };
   },
 
@@ -37,23 +43,23 @@ export default {
       const baseURI = 'https://pixabay.com/api/';
       const apiKey = process.env.VUE_APP_API_KEY;
 
+      this.loading = true;
       this.search = search;
       this.page = 1;
 
-      const url = `${baseURI}?key=${apiKey}&q=${search}`;
+      const url = `${baseURI}?key=${apiKey}&q=${search}&per_page=${this.perPage}`;
       this.$http
         .get(url)
         .then(({ data }) => {
           this.images = data.hits;
           this.totalImages = data.total;
+          this.loading = false;
         })
-        .catch(err => {
-          console.error(err.message);
+        .catch(() => {
+          alert('Something went wrong!');
+          this.loading = false;
         });
     },
-
-    nextPage() {},
-    prevPage() {},
   },
 };
 </script>
@@ -82,6 +88,11 @@ export default {
 .brand {
   font-family: 'Comfortaa', cursive;
   font-size: 3rem;
+}
+
+.instructions {
+  text-align: center;
+  padding: 4rem 2rem;
 }
 
 @media all and (min-width: 1023px) {
