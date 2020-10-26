@@ -1,13 +1,23 @@
 <template>
-  <div class="searchbar">
-    <label for="search">Search</label>
-    <input
-      v-model="search"
-      type="text"
-      id="search"
-      placeholder="Enter pictures to search for..."
-    />
-    <button @click="handleClick">Let's Hunt</button>
+  <div id="searchbar">
+    <div class="search-wrapper">
+      <span class="material-icons search-icon">search</span>
+      <input
+        v-model="search"
+        @keyup.enter="handleSearch"
+        type="text"
+        class="search"
+        placeholder="Search"
+      />
+      <span
+        v-show="showClearIcon"
+        class="material-icons clear-icon"
+        @click="clearSearch"
+      >
+        close
+      </span>
+    </div>
+    <button class="button" @click="handleSearch">Go</button>
   </div>
 </template>
 
@@ -21,24 +31,96 @@ export default {
     };
   },
 
+  computed: {
+    showClearIcon() {
+      return this.search.length > 0;
+    },
+  },
+
   methods: {
-    handleClick() {
-      this.$emit('search', this.search);
+    handleSearch() {
+      if (this.search.length > 0) {
+        this.$emit('search', this.search);
+        this.search = '';
+      } else {
+        alert('Please input a value to search for!');
+      }
+    },
+
+    clearSearch() {
       this.search = '';
+    },
+
+    onEnter() {
+      alert('enter key pressed');
     },
   },
 };
 </script>
 
 <style scoped>
-.searchbar label {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
+#searchbar {
+  width: 100%;
+  height: 45px;
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.search-wrapper {
+  width: 100%;
+  height: 100%;
+  flex-grow: 1;
+  display: flex;
+  position: relative;
+}
+
+.search {
+  padding: 0 21px 0 30px;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ccc;
+  outline: 0;
+  background: #f5f5f5;
+}
+
+.search:hover,
+.search:focus {
+  border: 1px solid #009688;
+  background: #fff;
+}
+
+.search-icon {
   position: absolute;
-  width: 1px;
+  top: 10.5px;
+  left: 3px;
+}
+
+.clear-icon {
+  position: absolute;
+  top: 10.5px;
+  right: 3px;
+  cursor: pointer;
+}
+
+.button {
+  width: 60px;
+  height: 100%;
+  padding: 8px;
+  text-transform: uppercase;
+  font-weight: 700;
+  border: none;
+  background: #2659ff;
+  outline: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+@media all and (min-width: 481px) {
+  .search,
+  .button {
+    font-size: 1.2rem;
+  }
 }
 </style>
