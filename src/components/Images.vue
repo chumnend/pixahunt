@@ -1,9 +1,12 @@
 <template>
   <div id="images">
-    <h3 class="search">
-      Showing results for:
-      <span class="search-text">{{ search }}</span>
-    </h3>
+    <div class="results">
+      <h3 class="search">
+        Showing results for:
+        <span class="search-text">{{ search }}</span>
+      </h3>
+      <small>Total Results: {{ totalImages }}</small>
+    </div>
 
     <loader v-if="loading" />
 
@@ -33,6 +36,7 @@ export default {
 
   props: {
     images: Array,
+    totalImages: Number,
     search: String,
     loading: Boolean,
   },
@@ -46,9 +50,16 @@ export default {
   padding: 2rem 0;
 }
 
+.results {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 1.5rem;
+}
+
 .search {
   text-align: center;
-  padding-bottom: 1.5rem;
 }
 
 .search-text {

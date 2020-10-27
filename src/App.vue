@@ -10,7 +10,20 @@
       <h3 class="instructions" v-if="!search">
         Search for something in the search bar and let's get hunting!
       </h3>
-      <images v-else :images="images" :search="search" :loading="loading" />
+      <images
+        v-else
+        :images="images"
+        :totalImages="totalImages"
+        :search="search"
+        :loading="loading"
+      />
+      <button
+        v-if="search && images.length < totalImages"
+        class="more"
+        @click="loadMore"
+      >
+        More
+      </button>
     </div>
   </div>
 </template>
@@ -60,6 +73,27 @@ export default {
           this.loading = false;
         });
     },
+
+    loadMore() {
+      const baseURI = 'https://pixabay.com/api/';
+      const apiKey = process.env.VUE_APP_API_KEY;
+
+      this.loading = true;
+
+      const url = `${baseURI}?key=${apiKey}&q=${this.search}
+        &per_page=${this.perPage}&page=${this.page + 1}`;
+      this.$http
+        .get(url)
+        .then(({ data }) => {
+          this.images = this.images.concat(data.hits);
+          this.page = this.page + 1;
+          this.loading = false;
+        })
+        .catch(() => {
+          alert('Something went wrong!');
+          this.loading = false;
+        });
+    },
   },
 };
 </script>
@@ -93,6 +127,21 @@ export default {
 .instructions {
   text-align: center;
   padding: 4rem 2rem;
+}
+
+.more {
+  width: 100px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 8px;
+  text-transform: uppercase;
+  font-weight: 700;
+  border: none;
+  background: #2659ff;
+  outline: none;
+  color: #fff;
+  cursor: pointer;
+  display: block;
 }
 
 @media all and (min-width: 1023px) {
