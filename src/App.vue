@@ -18,7 +18,7 @@
         :loading="loading"
       />
       <button
-        v-if="search && images.length < totalImages"
+        v-if="search && this.page !== this.totalPages"
         class="more"
         @click="loadMore"
       >
@@ -46,6 +46,7 @@ export default {
       images: [],
       totalImages: 0,
       page: 1,
+      totalPages: 1,
       search: '',
       perPage: 15,
     };
@@ -66,6 +67,7 @@ export default {
         .then(({ data }) => {
           this.images = data.hits;
           this.totalImages = data.total;
+          this.totalPages = Math.ceil(this.totalImages / this.perPage);
           this.loading = false;
         })
         .catch(() => {
@@ -85,7 +87,7 @@ export default {
       this.$http
         .get(url)
         .then(({ data }) => {
-          this.images = this.images.concat(data.hits);
+          this.images = data.hits;
           this.page = this.page + 1;
           this.loading = false;
         })
