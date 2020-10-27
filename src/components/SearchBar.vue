@@ -17,13 +17,17 @@
         close
       </span>
     </div>
-    <button class="button" @click="handleSearch">Go</button>
+    <button class="button" @click="handleSearch" :disabled="loading">Go</button>
   </div>
 </template>
 
 <script>
 export default {
   name: 'SearchBar',
+
+  props: {
+    loading: Boolean,
+  },
 
   data() {
     return {
@@ -115,6 +119,11 @@ export default {
   outline: none;
   color: #fff;
   cursor: pointer;
+}
+
+.button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
 }
 
 @media all and (min-width: 481px) {
