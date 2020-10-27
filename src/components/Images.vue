@@ -46,6 +46,15 @@ export default {
   padding: 2rem 0;
 }
 
+.search {
+  text-align: center;
+  padding-bottom: 1.5rem;
+}
+
+.search-text {
+  color: #2659ff;
+}
+
 .image-container {
   list-style: none;
   width: 100%;
@@ -68,15 +77,6 @@ export default {
   display: block;
   text-align: center;
   width: 100%;
-}
-
-.search {
-  text-align: center;
-  padding-bottom: 1.5rem;
-}
-
-.search-text {
-  color: #2659ff;
 }
 
 @media all and (min-width: 481px) {

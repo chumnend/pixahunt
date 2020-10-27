@@ -8,7 +8,7 @@
       <searchbar @search="makeSearch" :loading="loading" />
 
       <h3 class="instructions" v-if="!search">
-        Type something in the search bar and hit 'GO' to get started.
+        Search for something in the search bar and let's get hunting!
       </h3>
       <images v-else :images="images" :search="search" :loading="loading" />
     </div>
