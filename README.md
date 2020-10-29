@@ -17,7 +17,7 @@ built using **Vue.js.**
 
 ### Configuration
 1) Clone the repo
-2) Run `npm install` to download dependencies
+2) Run `npm install` to install dependencies
 3) Copy the file `env.example` and rename it `.env`. This file contains the 
 name of required environment variables needed for the application to work.
 
