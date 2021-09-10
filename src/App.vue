@@ -17,13 +17,22 @@
         :search="search"
         :loading="loading"
       />
-      <button
-        v-if="search && this.page !== this.totalPages"
-        class="more"
-        @click="loadMore"
-      >
-        More
-      </button>
+      <div class="nav-buttons">
+        <button
+          v-if="search && this.page !== 1"
+          class="button"
+          @click="loadLess"
+        >
+          Less
+        </button>
+        <button
+          v-if="search && this.page !== this.totalPages"
+          class="button"
+          @click="loadMore"
+        >
+          More
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -68,6 +77,27 @@ export default {
           this.images = data.hits;
           this.totalImages = data.total;
           this.totalPages = Math.ceil(this.totalImages / this.perPage);
+          this.loading = false;
+        })
+        .catch(() => {
+          alert('Something went wrong!');
+          this.loading = false;
+        });
+    },
+
+    loadLess() {
+      const baseURI = 'https://pixabay.com/api/';
+      const apiKey = process.env.VUE_APP_API_KEY;
+
+      this.loading = true;
+
+      const url = `${baseURI}?key=${apiKey}&q=${this.search}
+        &per_page=${this.perPage}&page=${this.page - 1}`;
+      this.$http
+        .get(url)
+        .then(({ data }) => {
+          this.images = data.hits;
+          this.page = this.page - 1;
           this.loading = false;
         })
         .catch(() => {
@@ -131,7 +161,14 @@ export default {
   padding: 4rem 2rem;
 }
 
-.more {
+.nav-buttons {
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
   width: 100px;
   height: 100%;
   margin: 0 auto;
