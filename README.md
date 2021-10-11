@@ -6,7 +6,7 @@ page where the user can get more information about the image they selected. This
 built using **Vue.js.**
 
 ## Demo
-![pixahunt-capture](pixahunt-capture.gif)
+![pixahunt-capture](public/pixahunt-capture.gif)
 
 ## Development Setup
 
@@ -18,14 +18,13 @@ built using **Vue.js.**
 ### Configuration
 1) Clone the repo
 2) Run `npm install` to install dependencies
-3) Copy the file `env.example` and rename it `.env`. This file contains the 
+3) Copy the file `.env.example` and rename it `.env`. This file contains the 
 name of required environment variables needed for the application to work.
 
 
 ```
 NODE_ENV=             # 'development' or 'production'
 PORT=                 # Port number the application will run on
-
 VUE_APP_API_KEY=      # API Key obtained from https://pixabay.com/api/docs/
 ```
 4) Start the application using `npm run serve`
