@@ -41,7 +41,7 @@ VUE_APP_API_KEY=      # API Key obtained from https://pixabay.com/api/docs/
 
 
 ### Deployment
-Application is deployed to Heroku upon push to stable branch
+Not deployed.
 
 ## Contact
 Nicholas Chumney - [nicholas.chumney@outlook.com](nicholas.chumney@outlook.com) 
